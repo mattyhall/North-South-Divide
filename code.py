@@ -33,30 +33,37 @@ def min_max_lat(data):
             min_lat = row[1]
     return min_lat, max_lat
 
+def build_tiles(data, step, top, bottom):
+    # top - bottom here gives the number of degrees that our data covers
+    # dividing by step gives the number of areas it will be split into but is off by one
+    tiles = [0 for x in range(1 + int((top - bottom) / step))]
+    for row in data:
+        # find the tile it is in and increase the crime count by one
+        tile_lat = int((row[1] - bottom) / step) 
+        tiles[tile_lat] += 1
+    return tiles
+
 def main():
-    # directory = 'test_data'
     directory = './street_crime/'
     data = load_all_data_in_directory(directory)
     bottom, top = min_max_lat(data)
-    max_difference = -1
-    latitude = 0
+    # the step is how far up the country will it move each time (in degrees)
     step = 0.2
-    i = 0
-    for lat in drange(bottom+step, top, step):
-        south_count = north_count = 0
-        for row in data:
-            if bottom <= row[1] <= lat:
-                south_count += 1
-            elif lat < row[1] < top:
-                north_count += 1
-        south_count /= (lat - bottom) / step
-        north_count /= (top - lat) / step
+    tiles = build_tiles(data, step, top, bottom)
+    max_difference = latitude = -1
+    for i in range(len(tiles)):
+        # the south is defined as the tiles less that and including i, the north is the ones above
+        south = tiles[0:i+1]
+        north = tiles[i:]
+        south_count = sum(south)
+        north_count = sum(north)
+        # we divide by the number of tiles to get an average taking into account area
+        south_count /= len(south)
+        north_count /= len(north)
         diff = abs(north_count - south_count)
-        # print lat, diff
         if diff > max_difference and north_count != 0 and south_count != 0:
          max_difference = diff
-         latitude = lat
-    print bottom, top
+         latitude = bottom + step * i
     print 'Answer!', latitude
 
 if __name__ == '__main__':
