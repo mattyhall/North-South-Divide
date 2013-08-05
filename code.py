@@ -31,7 +31,6 @@ def min_max_lat(data):
             max_lat = row[1]
         elif row[1] < min_lat:
             min_lat = row[1]
-    print min_lat, max_lat
     return min_lat, max_lat
 
 def main():
@@ -53,7 +52,7 @@ def main():
         south_count /= (lat - bottom) / step
         north_count /= (top - lat) / step
         diff = abs(north_count - south_count)
-        print lat, diff
+        # print lat, diff
         if diff > max_difference and north_count != 0 and south_count != 0:
          max_difference = diff
          latitude = lat

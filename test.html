@@ -20,9 +20,15 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
   var dividePath = [
-      new google.maps.LatLng(53.9, -5),
+      new google.maps.LatLng(53.9, -8),
       new google.maps.LatLng(53.9, 1)
   ];
+
+    var topPath = [
+      new google.maps.LatLng(57.6890000013, -8),
+      new google.maps.LatLng(57.6890000013, 1)
+  ];
+
   var dividePath = new google.maps.Polyline({
     path: dividePath,
     strokeColor: '#FF0000',
@@ -30,7 +36,15 @@ function initialize() {
     strokeWeight: 2
   });
 
+  var topPath = new google.maps.Polyline({
+    path: topPath,
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+
   dividePath.setMap(map);
+  topPath.setMap(map);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
