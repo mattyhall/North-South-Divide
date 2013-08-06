@@ -31,14 +31,13 @@ def do_all_of_it_terrible_function_name_im_so_sorry_forgive_me():
                 max_difference = diff
                 latitude = bottom + step * y
             colour = '#FF0000'
-            if tile[y] <= 0:
-                colour = '#0000FF' 
-            elif 0 < tile[y] < BOTTOM:
+            if 0 < tile[y] < BOTTOM:
                 colour = '#00FF00'
             elif BOTTOM <= tile[y] < MIDDLE:
                 # amber
                 colour = '#FF9900'
-            draw_data['circles'].append([bottom + step * y+step, longitude, colour])
+            if tile[y] > 0:
+                draw_data['circles'].append([bottom + step * y+step, longitude, colour])
         draw_data['lines'].append([latitude, longitude])
         draw_data['lines'].append([latitude + step, longitude + step])
     return draw_data
