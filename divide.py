@@ -16,7 +16,6 @@ def data():
     if data_set == 0:
         data_set = PoliceData()  
     elif data_set == 1:
-        print 'Population!'
         data_set = PopulationData()
     data_set.load() 
     data = work(data_set)   

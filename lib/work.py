@@ -13,7 +13,7 @@ def work(data_set):
         tile = tiles[x]
         longitude = left + step * x
         for y in range(len(tile)):
-            # the south is defined as the tiles less that and including y, the north is the ones above
+            # the south is defined as the tiles less than and including y, the north is the ones above
             south = tile[0:y+1]
             north = tile[y:]
             south_count = sum(south)
@@ -25,7 +25,9 @@ def work(data_set):
             if diff > max_difference and north_count != 0 and south_count != 0:
                 max_difference = diff
                 latitude = bottom + step * y
+            # assign a colour based on how many data points there were - red lots, amber some, green very little
             colour = '#FF0000'
+            # the bands may be different per data set (eg what value is green) so we put that in the data set's class
             if 0 < tile[y] < data_set.BOTTOM:
                 colour = '#00FF00'
             elif data_set.BOTTOM <= tile[y] < data_set.MIDDLE:
@@ -36,12 +38,15 @@ def work(data_set):
         if latitude >= 40:
             draw_data['squigle_line'].append([latitude, longitude])
             draw_data['squigle_line'].append([latitude + step, longitude + step])
+    # to take an average we need to find the area underneath the line
     area = 0
     for point in xrange(0, len(draw_data['squigle_line']), 2):
+        # we make a trapezium out of this data point and the next one
         a = draw_data['squigle_line'][point][0] - bottom
         b = draw_data['squigle_line'][point][0] - bottom
+        # and find the area
         area += ((a + b) * step) / 2.0
-    print len(draw_data['squigle_line'])
+    # to get a straight, horizontal line we can treat the area as a rectangle
     height = area / abs(right - left) + bottom
     draw_data['average_line'] = [[height, left], [height, right]]
     return draw_data
