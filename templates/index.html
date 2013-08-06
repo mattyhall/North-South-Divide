@@ -17,14 +17,15 @@ function initialize() {
   };
 
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-  $.getJSON('/data', function(data){
+  alert('{{ data_set }}');
+  $.getJSON('/data?dataset={{ data_set }}', function(data){
     var path = [];
     lines = data["lines"];
     circles = data["circles"];
     $.each(lines, function(index, value){
       path.push(new google.maps.LatLng(value[0], value[1]));
     });
+    alert(path);
     var path = new google.maps.Polyline({
       path: path,
       strokeColor: '#000000',

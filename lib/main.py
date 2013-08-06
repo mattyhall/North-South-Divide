@@ -6,6 +6,7 @@ MIDDLE = 0.15
 
 def work(data_set):
     bottom, top, left, right = data_set.min_max_lat_long()
+    print bottom
     # the step is how far up the country will it move each time (in degrees)
     step = 0.2
     tiles = build_tiles(data_set, step, top, bottom, left, right)
