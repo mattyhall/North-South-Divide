@@ -8,7 +8,6 @@ def do_all_of_it_terrible_function_name_im_so_sorry_forgive_me():
     # the step is how far up the country will it move each time (in degrees)
     step = 0.2
     tiles = build_tiles(data, step, top, bottom, left, right)
-    print tiles    
     normalise_tiles(tiles)
     draw_data = {'lines': []}
     for x in range(len(tiles)):
