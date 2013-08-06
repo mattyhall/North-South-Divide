@@ -34,7 +34,7 @@ def work(data_set):
                 # amber
                 colour = '#FF9900'
             if tile[y] > 0:
-                draw_data['circles'].append([bottom + step * y+step, longitude, colour])
+                draw_data['circles'].append([bottom + step * y + step / 2, longitude + step / 2, colour])
         if latitude >= 40:
             draw_data['squigle_line'].append([latitude, longitude])
             draw_data['squigle_line'].append([latitude + step, longitude + step])
