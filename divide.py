@@ -10,10 +10,13 @@ def root():
 
 @app.route('/data')
 def data():
-    data = do_all_of_it_terrible_function_name_im_so_sorry_forgive_me()
-    return json.dumps(data)
+	data_set = request.args.get('data', 0)
+	if data_set == 0:
+	    directory = './data/street_crime/'
+	    data_set = PoliceData()
+	    data_set.load(directory)	
+	    data = work(data_set)
+	    return json.dumps(data)
 
 if __name__ == '__main__':
-    # app.debug = True
-    # do_all_of_it_terrible_function_name_im_so_sorry_forgive_me()
     app.run(debug=True)
