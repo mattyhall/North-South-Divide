@@ -23,48 +23,57 @@ def drange(first, last, step):
         yield x
         x += step
 
-def min_max_lat(data):
-    min_lat = 10000000
-    max_lat = -1
+def min_max_lat_long(data):
+    min_lat = min_long = 10000000
+    max_lat = max_long = -1
     for row in data:
         if row[1] > max_lat:
             max_lat = row[1]
         elif row[1] < min_lat:
             min_lat = row[1]
-    return min_lat, max_lat
+        if row[0] > max_long:
+            max_long = row[0]
+        elif row[0] < min_long:
+            min_long = row[0]
+    return min_lat, max_lat, min_long, max_long
 
-def build_tiles(data, step, top, bottom):
+def build_tiles(data, step, top, bottom, left, right):
     # top - bottom here gives the number of degrees that our data covers
     # dividing by step gives the number of areas it will be split into but is off by one
-    tiles = [0 for x in range(1 + int((top - bottom) / step))]
+    tiles = [[0 for y in xrange(1 + int((top - bottom) / step))] for x in range(1 + int((right - left) / step))]
     for row in data:
         # find the tile it is in and increase the crime count by one
         tile_lat = int((row[1] - bottom) / step) 
-        tiles[tile_lat] += 1
+        tile_long = int((row[0] - left) / step)
+        tiles[tile_long][tile_lat] += 1
     return tiles
 
 def main():
     directory = './street_crime/'
     data = load_all_data_in_directory(directory)
-    bottom, top = min_max_lat(data)
+    bottom, top, left, right = min_max_lat_long(data)
     # the step is how far up the country will it move each time (in degrees)
     step = 0.2
-    tiles = build_tiles(data, step, top, bottom)
-    max_difference = latitude = -1
-    for i in range(len(tiles)):
-        # the south is defined as the tiles less that and including i, the north is the ones above
-        south = tiles[0:i+1]
-        north = tiles[i:]
-        south_count = sum(south)
-        north_count = sum(north)
-        # we divide by the number of tiles to get an average taking into account area
-        south_count /= len(south)
-        north_count /= len(north)
-        diff = abs(north_count - south_count)
-        if diff > max_difference and north_count != 0 and south_count != 0:
-         max_difference = diff
-         latitude = bottom + step * i
-    print 'Answer!', latitude
+    tiles = build_tiles(data, step, top, bottom, left, right)
+    for x in range(len(tiles)):
+        max_difference = latitude = -1
+        tile = tiles[x]
+        longitude = left + step * x
+        for y in range(len(tiles)):
+            # the south is defined as the tiles less that and including y, the north is the ones above
+            south = tile[0:y+1]
+            north = tile[y:]
+            south_count = sum(south)
+            north_count = sum(north)
+            # we divide by the number of tiles to get an average taking into account area
+            south_count /= len(south)
+            north_count /= len(north)
+            diff = abs(north_count - south_count)
+            if diff > max_difference and north_count != 0 and south_count != 0:
+             max_difference = diff
+             latitude = bottom + step * y
+        print 'new google.maps.LatLng(' + str(latitude) + ',' + str(longitude) + '),'
+        print 'new google.maps.LatLng(' + str(latitude+step) + ',' + str(longitude+step) + '),'
 
 if __name__ == '__main__':
     main()
