@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Simple Polylines</title>
     <link href="https://developers.google.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
     <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
     <script>
 function initialize() {
@@ -46,20 +46,36 @@ function initialize() {
       });
       path2.setMap(map);      
     }
-    var circle;
-    $.each(circles, function(index, value){
-      var circleOpts = {
-        strokeColor: value[2],
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: value[2],
-        fillOpacity: 0.6,
-        map: map,
-        center: new google.maps.LatLng(value[0], value[1]),
-        radius: 2000
-      };
-      circle = new google.maps.Circle(circleOpts);  
-    });
+
+    if ("{{ heat_map }}" != "True") {
+      var circle;
+      $.each(circles, function(index, value){
+        var circleOpts = {
+          strokeColor: value[2],
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: value[2],
+          fillOpacity: 0.6,
+          map: map,
+          center: new google.maps.LatLng(value[0], value[1]),
+          radius: 2000
+        };
+        circle = new google.maps.Circle(circleOpts);  
+      });
+    } else {
+      var heatMapData = [];
+      $.each(circles, function(index, value){
+        // alert(value[2])
+        heatMapData.push({location: new google.maps.LatLng(value[0], value[1]), weight: value[3] * 300});
+      });
+      // alert(heatMapData);
+      var pointArray = new google.maps.MVCArray(heatMapData);
+      var heatmap = new google.maps.visualization.HeatmapLayer({
+        data: pointArray,
+        radius: 50,
+      });
+      heatmap.setMap(map);
+    }
   });
 }  
 
