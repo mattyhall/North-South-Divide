@@ -7,6 +7,9 @@ class DataSet(object):
     def load(self):
         pass
 
+    def get_value(self, row):
+        pass
+
     def min_max_lat_long(self):
         min_lat = min_long = 10000000
         max_lat = max_long = -1
@@ -36,7 +39,7 @@ class DataSet(object):
         return min_lat, max_lat, min_long, max_long
 
     def __iter__(self):
-        return iter(self.data)  
+        return iter(self.data)
 
 class PoliceData(DataSet):
     def load(self, directory):
@@ -53,3 +56,13 @@ class PoliceData(DataSet):
                     self.data.append([float(split[4]), float(split[5]), split[9]])
             else:
                 line_n += 1
+
+    def get_value(self, row):
+        if row[2] == 'Burglary':
+            return 2
+        elif row[2] == 'Robbery':
+            return 3
+        elif row[2] == 'Violent crime':
+            return 4
+        else:
+            return  1

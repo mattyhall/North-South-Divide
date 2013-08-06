@@ -6,7 +6,7 @@ def build_tiles(data_set, step, top, bottom, left, right):
         # find the tile it is in and increase the crime count by one
         tile_lat = int((row[1] - bottom) / step) 
         tile_long = int((row[0] - left) / step)
-        tiles[tile_long][tile_lat] += 1
+        tiles[tile_long][tile_lat] += data_set.get_value(row)
     return tiles
 
 def normalise_tiles(tiles):
