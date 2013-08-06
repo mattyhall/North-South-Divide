@@ -1,8 +1,8 @@
 from lib.loaddata import *
 from lib.tiles import *
 
-BOTTOM = 0.25
-MIDDLE = 0.66
+BOTTOM = 0.05
+MIDDLE = 0.15
 
 def do_all_of_it_terrible_function_name_im_so_sorry_forgive_me():
     directory = './data/street_crime/'
