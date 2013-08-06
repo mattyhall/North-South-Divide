@@ -23,3 +23,4 @@ def normalise_tiles(tiles):
     for x in range(len(tiles)):
         for y in range(len(tiles[x])):
             tiles[x][y] = (tiles[x][y] - minimum) / float(maximum - minimum)
+    return tiles

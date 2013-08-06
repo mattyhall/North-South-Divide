@@ -11,7 +11,6 @@ def root():
 @app.route('/data')
 def data():
     data = do_all_of_it_terrible_function_name_im_so_sorry_forgive_me()
-    print data
     return json.dumps(data)
 
 if __name__ == '__main__':
