@@ -11,7 +11,7 @@ def work(data_set):
     step = 0.2
     tiles = build_tiles(data_set, step, top, bottom, left, right)
     tiles = normalise_tiles(tiles)
-    draw_data = {'lines': [], 'circles': []}
+    draw_data = {'squigle_line': [], 'circles': []}
     for x in range(len(tiles)):
         max_difference = latitude = -1
         tile = tiles[x]
@@ -37,6 +37,6 @@ def work(data_set):
                 colour = '#FF9900'
             if tile[y] > 0:
                 draw_data['circles'].append([bottom + step * y+step, longitude, colour])
-        draw_data['lines'].append([latitude, longitude])
-        draw_data['lines'].append([latitude + step, longitude + step])
+        draw_data['squigle_line'].append([latitude, longitude])
+        draw_data['squigle_line'].append([latitude + step, longitude + step])
     return draw_data

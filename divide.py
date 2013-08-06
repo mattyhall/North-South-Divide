@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def root():
-    return render_template('index.html', data_set=int(request.args.get('dataset', 0)), no_line=bool(request.args.get('noline', False)))
+    return render_template('index.html', data_set=int(request.args.get('dataset', 0)), no_line=request.args.get('noline', False))
 
 @app.route('/data')
 def data():

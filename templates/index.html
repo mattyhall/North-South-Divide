@@ -19,7 +19,7 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   $.getJSON('/data', {'dataset': {{ data_set }}}, function(data){
     var path = [];
-    lines = data["lines"];
+    lines = data["squigle_line"];
     circles = data["circles"];
     if ("{{ no_line }}" == "False") {
       $.each(lines, function(index, value){
