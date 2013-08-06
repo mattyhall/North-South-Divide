@@ -2,6 +2,9 @@ import os
 from lib.loaddata import DataSet
 
 class PoliceData(DataSet):
+    BOTTOM = 0.05
+    MIDDLE = 0.15
+    
     def load(self):
         directory = './data/street_crime/'
         for file in os.listdir(directory):

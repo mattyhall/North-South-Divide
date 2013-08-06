@@ -1,13 +1,10 @@
 from lib.loaddata import *
 from lib.tiles import *
 
-BOTTOM = 0.05
-MIDDLE = 0.15
-
 def work(data_set):
     bottom, top, left, right = data_set.min_max_lat_long()
     # the step is how far up the country will it move each time (in degrees)
-    step = 0.1
+    step = 0.2
     tiles = build_tiles(data_set, step, top, bottom, left, right)
     tiles = normalise_tiles(tiles)
     draw_data = {'squigle_line': [], 'circles': []}
@@ -29,9 +26,9 @@ def work(data_set):
                 max_difference = diff
                 latitude = bottom + step * y
             colour = '#FF0000'
-            if 0 < tile[y] < BOTTOM:
+            if 0 < tile[y] < data_set.BOTTOM:
                 colour = '#00FF00'
-            elif BOTTOM <= tile[y] < MIDDLE:
+            elif data_set.BOTTOM <= tile[y] < data_set.MIDDLE:
                 # amber
                 colour = '#FF9900'
             if tile[y] > 0:
@@ -41,7 +38,6 @@ def work(data_set):
             draw_data['squigle_line'].append([latitude + step, longitude + step])
     area = 0
     for point in xrange(0, len(draw_data['squigle_line']), 2):
-        print point
         a = draw_data['squigle_line'][point][0] - bottom
         b = draw_data['squigle_line'][point][0] - bottom
         area += ((a + b) * step) / 2.0
