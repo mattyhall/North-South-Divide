@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from lib.main import work
+from lib.work import work
 from lib.loaders.policedata import PoliceData
 from lib.loaders.populationdata import PopulationData
 import json
