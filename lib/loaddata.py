@@ -12,14 +12,14 @@ class DataSet(object):
         min_lat = min_long = 10000000
         max_lat = max_long = -1
         for row in self.data:
-            if row[1] > max_lat:
-                max_lat = row[1]
-            elif row[1] < min_lat:
-                min_lat = row[1]
-            if row[0] > max_long:
-                max_long = row[0]
-            elif row[0] < min_long:
-                min_long = row[0]
+            if row['latitude'] > max_lat:
+                max_lat = row['latitude']
+            elif row['latitude'] < min_lat:
+                min_lat = row['latitude']
+            if row['longitude'] > max_long:
+                max_long = row['longitude']
+            elif row['longitude'] < min_long:
+                min_long = row['longitude']
         return min_lat, max_lat, min_long, max_long
 
     def __iter__(self):

@@ -9,7 +9,7 @@ class PopulationData(DataSet):
         handle = open(file, 'r')
         for line in handle:
             split = line.split(',')
-            self.data.append([float(split[0]), float(split[1]), float(split[2])])
+            self.data.append({'longitude': float(split[0]), 'latitude': float(split[1]), 'population': float(split[2])})
 
     def get_value(self, row):
-        return row[2]
+        return row['population']

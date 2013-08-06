@@ -24,7 +24,7 @@ function initialize() {
     circles = data["circles"];
     if ("{{ no_line }}" == "False") {
       $.each(squigle, function(index, value){
-        path.push(new google.maps.LatLng(value[0], value[1]));
+        path.push(new google.maps.LatLng(value['latitude'], value['longitude']));
       });
       var path = new google.maps.Polyline({
         path: path,
@@ -36,7 +36,7 @@ function initialize() {
 
       var path2 = [];
       $.each(average, function(index, value){
-        path2.push(new google.maps.LatLng(value[0], value[1]));
+        path2.push(new google.maps.LatLng(value['latitude'], value['longitude']));
       });
       var path2 = new google.maps.Polyline({
         path: path2,
@@ -51,13 +51,13 @@ function initialize() {
       var circle;
       $.each(circles, function(index, value){
         var circleOpts = {
-          strokeColor: value[2],
+          strokeColor: value['colour'],
           strokeOpacity: 0.8,
           strokeWeight: 2,
-          fillColor: value[2],
+          fillColor: value['colour'],
           fillOpacity: 0.6,
           map: map,
-          center: new google.maps.LatLng(value[0], value[1]),
+          center: new google.maps.LatLng(value['latitude'], value['longitude']),
           radius: 2000
         };
         circle = new google.maps.Circle(circleOpts);  
@@ -65,14 +65,13 @@ function initialize() {
     } else {
       var heatMapData = [];
       $.each(circles, function(index, value){
-        // alert(value[2])
-        heatMapData.push({location: new google.maps.LatLng(value[0], value[1]), weight: value[3] * 300});
+        heatMapData.push({location: new google.maps.LatLng(value['latitude'], value['longitude']), weight: value['intensity']});
       });
-      // alert(heatMapData);
       var pointArray = new google.maps.MVCArray(heatMapData);
       var heatmap = new google.maps.visualization.HeatmapLayer({
         data: pointArray,
         radius: 50,
+        dissipating: false
       });
       heatmap.setMap(map);
     }

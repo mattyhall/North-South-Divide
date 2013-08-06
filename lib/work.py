@@ -22,6 +22,7 @@ def work(data_set):
             south_count /= len(south)
             north_count /= len(north)
             diff = abs(north_count - south_count)
+            # if it is the biggest difference between north and south we store it for later
             if diff > max_difference and north_count != 0 and south_count != 0:
                 max_difference = diff
                 latitude = bottom + step * y
@@ -33,20 +34,25 @@ def work(data_set):
             elif data_set.BOTTOM <= tile[y] < data_set.MIDDLE:
                 # amber
                 colour = '#FF9900'
+            # we check if the latitude is more than 0. There were weird bugs where a line would be drawn to the equator
             if tile[y] > 0:
-                draw_data['circles'].append([bottom + step * y + step / 2, longitude + step / 2, colour, tile[y]])
+                # intensity is 
+                draw_data['circles'].append({'latitude': bottom + step * y + step / 2, 
+                                             'longitude': longitude + step / 2, 
+                                             'colour': colour, 
+                                             'intensity': tile[y]})
         if latitude >= 40:
-            draw_data['squigle_line'].append([latitude, longitude])
-            draw_data['squigle_line'].append([latitude + step, longitude + step])
+            draw_data['squigle_line'].append({'latitude': latitude, 'longitude': longitude})
+            draw_data['squigle_line'].append({'latitude': latitude + step, 'longitude': longitude + step})
     # to take an average we need to find the area underneath the line
     area = 0
     for point in xrange(0, len(draw_data['squigle_line']), 2):
         # we make a trapezium out of this data point and the next one
-        a = draw_data['squigle_line'][point][0] - bottom
-        b = draw_data['squigle_line'][point][0] - bottom
+        a = draw_data['squigle_line'][point]['latitude'] - bottom
+        b = draw_data['squigle_line'][point]['latitude'] - bottom
         # and find the area
         area += ((a + b) * step) / 2.0
     # to get a straight, horizontal line we can treat the area as a rectangle
     height = area / abs(right - left) + bottom
-    draw_data['average_line'] = [[height, left], [height, right]]
+    draw_data['average_line'] = [{'latitude': height, 'longitude': left}, {'latitude': height, 'longitude': right}]
     return draw_data

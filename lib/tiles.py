@@ -4,8 +4,8 @@ def build_tiles(data_set, step, top, bottom, left, right):
     tiles = [[0 for y in xrange(1 + int((top - bottom) / step))] for x in range(1 + int((right - left) / step))]
     for row in data_set:
         # find the tile it is in and increase the count by whatever the data set returns
-        tile_lat = int((row[1] - bottom) / step) 
-        tile_long = int((row[0] - left) / step)
+        tile_lat = int((row['latitude'] - bottom) / step) 
+        tile_long = int((row['longitude'] - left) / step)
         tiles[tile_long][tile_lat] += data_set.get_value(row)
     return tiles
 
