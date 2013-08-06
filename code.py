@@ -1,4 +1,8 @@
 import os
+from flask import Flask, render_template
+import json
+
+app = Flask(__name__)
 
 def load_data(data, handle):
     line_n = 0
@@ -48,13 +52,14 @@ def build_tiles(data, step, top, bottom, left, right):
         tiles[tile_long][tile_lat] += 1
     return tiles
 
-def main():
-    directory = './street_crime/'
+def do_all_of_it_terrible_function_name_im_so_sorry_forgive_me():
+    directory = './data/street_crime/'
     data = load_all_data_in_directory(directory)
     bottom, top, left, right = min_max_lat_long(data)
     # the step is how far up the country will it move each time (in degrees)
     step = 0.2
     tiles = build_tiles(data, step, top, bottom, left, right)
+    draw_data = {'lines': []}
     for x in range(len(tiles)):
         max_difference = latitude = -1
         tile = tiles[x]
@@ -72,8 +77,21 @@ def main():
             if diff > max_difference and north_count != 0 and south_count != 0:
              max_difference = diff
              latitude = bottom + step * y
-        print 'new google.maps.LatLng(' + str(latitude) + ',' + str(longitude) + '),'
-        print 'new google.maps.LatLng(' + str(latitude+step) + ',' + str(longitude+step) + '),'
+        # print 'new google.maps.LatLng(' + str(latitude) + ',' + str(longitude) + '),'
+        # print 'new google.maps.LatLng(' + str(latitude+step) + ',' + str(longitude+step) + '),'
+        draw_data['lines'].append([latitude, longitude])
+        draw_data['lines'].append([latitude + step, longitude + step])
+    return draw_data
+
+@app.route('/')
+def root():
+    return render_template('index.html')
+
+@app.route('/data')
+def data():
+    data = do_all_of_it_terrible_function_name_im_so_sorry_forgive_me()
+    return json.dumps()
 
 if __name__ == '__main__':
-    main()
+    # do_all_of_it_terrible_function_name_im_so_sorry_forgive_me()
+    app.run()
