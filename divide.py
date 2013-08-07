@@ -3,6 +3,7 @@ from lib.work import work
 from lib.loaders.policedata import PoliceData
 from lib.loaders.populationdata import PopulationData
 from lib.loaders.childpovertydata import ChildPovertyData
+from lib.loaders.cancerdata import CancerData
 import json
 
 app = Flask(__name__)
@@ -13,6 +14,7 @@ def root():
     return render_template('index.html', police=request.args.get('police', 'true'),
                                          population=request.args.get('population', 'false'), 
                                          child_poverty=request.args.get('childpoverty', 'false'),
+                                         cancer=request.args.get('cancer', 'false'),
                                          no_line=request.args.get('noline', 'false'),
                                          heat_map=request.args.get('heatmap', 'false'))
 
@@ -21,6 +23,7 @@ def data():
     police = request.args.get('police', 'true')
     population = request.args.get('population', 'false')
     child_poverty = request.args.get('childpoverty', 'false')
+    cancer = request.args.get('cancer', 'false')
     data_sets = []
     if police == 'true':
         data_set = PoliceData()  
@@ -32,6 +35,10 @@ def data():
         data_sets.append(data_set)
     if child_poverty == 'true':
         data_set = ChildPovertyData()
+        data_set.load()
+        data_sets.append(data_set)
+    if cancer == 'true':
+        data_set = CancerData()
         data_set.load()
         data_sets.append(data_set)
     output = {}

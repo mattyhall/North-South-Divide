@@ -11,7 +11,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
     <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
     <script>
-var colour = {police: '#0000FF', population: '#00FF00', average: '#FF0000', childpoverty: '#800080'};
+var colour = {police: '#0000FF', population: '#00FF00', average: '#FF0000', childpoverty: '#800080', cancer:'#756431'};
 
 function draw_line(index, line, map) {
   var path = [];
@@ -38,7 +38,8 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   $.getJSON('/data', {population: "{{ population }}", 
                       police: "{{ police }}",
-                      childpoverty: "{{ child_poverty }}"}, function(data) {
+                      childpoverty: "{{ child_poverty }}",
+                      cancer: "{{ cancer }}"}, function(data) {
     length = Object.keys(data).length;
     $.each(data, function(index, value) {
       if (index != 'average') {
