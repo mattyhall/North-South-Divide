@@ -8,8 +8,23 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
     <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
     <script>
+var colour = {police: '#0000FF', population: '#00FF00', 'average': '#FF0000'};
+
+function draw_line(index, line, map) {
+  var path = [];
+  $.each(line, function(index, value){
+    path.push(new google.maps.LatLng(value['latitude'], value['longitude']));
+  });
+  var path = new google.maps.Polyline({
+    path: path,
+    strokeColor: colour[index],
+    strokeOpacity: 1.0,
+    strokeWeight: 2
+  });
+  path.setMap(map);     
+}
+
 function initialize() {
-  var colour = {police: '#0000FF', population: '#00FF00', 'average': '#FF0000'};
   var myLatLng = new google.maps.LatLng(52, 0);
   var mapOptions = {
     zoom: 3,
@@ -22,33 +37,13 @@ function initialize() {
     length = Object.keys(data).length;
     $.each(data, function(index, value) {
       if (index != 'average') {
-        var path2 = [];
         var average = value['average_line'];
-        $.each(average, function(index, value){
-          path2.push(new google.maps.LatLng(value['latitude'], value['longitude']));
-        });
-        var path2 = new google.maps.Polyline({
-          path: path2,
-          strokeColor: colour[index],
-          strokeOpacity: 1.0,
-          strokeWeight: 2
-        });
-        path2.setMap(map);      
-      } else {
-        var path2 = [];
-        $.each(value, function(index, value){
-          path2.push(new google.maps.LatLng(value['latitude'], value['longitude']));
-        });
-        var path2 = new google.maps.Polyline({
-          path: path2,
-          strokeColor: colour[index],
-          strokeOpacity: 1.0,
-          strokeWeight: 2
-        });
-        path2.setMap(map);              
+        draw_line(index, average, map);
+      } else if (length > 2) {
+        draw_line(index, value, map);             
       }        
       if (length == 2 && index != 'average'){ 
-        if ("{{ no_line }}" == 'false') {
+        if ("{{ no_line }}" != 'true') {
           squigle = value['squigle_line'];
           var path = [];
           $.each(squigle, function(index, value) {
