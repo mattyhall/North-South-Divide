@@ -39,7 +39,8 @@ function initialize() {
   $.getJSON('/data', {population: "{{ population }}", 
                       police: "{{ police }}",
                       childpoverty: "{{ child_poverty }}",
-                      cancer: "{{ cancer }}"}, function(data) {
+                      cancer: "{{ cancer }}",
+                      step: "{{ step }}"}, function(data) {
     length = Object.keys(data).length;
     $.each(data, function(index, value) {
       if (index != 'average') {
@@ -113,7 +114,24 @@ google.maps.event.addDomListener(window, 'load', initialize);
       <div class="col-lg-8">
         <div id="map-canvas"></div>
       </div>
-      <div class="col-lg-3">Controls go here</div>
+      <div class="col-lg-3">
+        <form method='get' action='/'>
+          <h3>Data sets to include:</h3>
+          <span class='line' id='police'>----</span> <input class='' type='checkbox' name='police' value='true' {% if police == 'true' %}checked{% endif %}>Street crime</input><br />
+          <span class='line' id='population'>----</span> <input class='' type='checkbox' name='population' value='true' {% if population == 'true' %}checked{% endif %}>Population</input><br />
+          <span class='line' id='childpoverty'>----</span> <input class='' type='checkbox' name='childpoverty' value='true' {% if child_poverty == 'true' %}checked{% endif %}>Child Poverty</input><br />
+          <span class='line' id='average'>----</span> Overall average
+          <hr />
+          <h3>Options</h3>
+          Tile size: <input type='textfield' name='step' value='{{ step }}'><br /><br />
+          <h4>The following only have an effect if one, and only one, data set is chosen</h4>
+          <input type='checkbox' name='noline' value='true' {% if no_line == 'true' %}checked{% endif %}>Omit the wavy line</input><br />
+          Visulisation: 
+          <input type="radio" name="heatmap" value="false" {% if heat_map != 'true' %}checked{% endif %}>Dots</input> 
+          <input type="radio" name="heatmap" value="true" {% if heat_map == 'true' %}checked{% endif %}>Heatmap</input>
+          <input type='submit' value='Calculate'>
+        </form>
+      </div>
     </div>
   </body>
 </html>

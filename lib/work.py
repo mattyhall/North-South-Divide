@@ -1,10 +1,8 @@
 from lib.loaddata import *
 from lib.tiles import *
 
-def work(data_set):
+def work(step, data_set):
     bottom, top, left, right = data_set.min_max_lat_long()
-    # the step is how far up the country will it move each time (in degrees)
-    step = 0.2
     tiles = build_tiles(data_set, step, top, bottom, left, right)
     tiles = normalise_tiles(tiles)
     draw_data = {'squigle_line': [], 'circles': []}

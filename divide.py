@@ -16,7 +16,8 @@ def root():
                                          child_poverty=request.args.get('childpoverty', 'false'),
                                          cancer=request.args.get('cancer', 'false'),
                                          no_line=request.args.get('noline', 'false'),
-                                         heat_map=request.args.get('heatmap', 'false'))
+                                         heat_map=request.args.get('heatmap', 'false'),
+                                         step=float(request.args.get('step', '0.2')))
 
 @app.route('/data')
 def data():
@@ -24,6 +25,7 @@ def data():
     population = request.args.get('population', 'false')
     child_poverty = request.args.get('childpoverty', 'false')
     cancer = request.args.get('cancer', 'false')
+    step = float(request.args.get('step', '0.2'))
     data_sets = []
     if police == 'true':
         data_set = PoliceData()  
@@ -44,7 +46,7 @@ def data():
     output = {}
     average = 0
     for data_set in data_sets:
-        data = work(data_set)
+        data = work(step, data_set)
         output[data_set.NAME] = data
         average += data['average_line'][0]['latitude']
     average /= len(data_sets)

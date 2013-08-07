@@ -26,3 +26,33 @@ body {
 	list-style-type: none;
 	display: inline;
 }
+
+.line {
+	font-weight: bold;
+	font-size: 30pt;
+	line-height:20px;
+}
+
+#police {
+	color: #0000FF;
+}
+
+#population {
+	color: #00FF00;
+}
+
+#childpoverty {
+	color: #800080;
+}
+
+#cancer {
+	color: #756431;
+}
+
+#average {
+	color: #FF0000;
+}
+
+hr {
+	border-top: 2px solid gray;
+}
