@@ -9,8 +9,8 @@ app = Flask(__name__)
 @app.route('/')
 def root():
     return render_template('index.html', data_set=int(request.args.get('dataset', 0)), 
-                                         no_line=request.args.get('noline', False),
-                                         heat_map=request.args.get('heatmap', False))
+                                         no_line=request.args.get('noline', 'false'),
+                                         heat_map=request.args.get('heatmap', 'false'))
 
 @app.route('/data')
 def data():

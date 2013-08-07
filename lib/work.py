@@ -43,7 +43,7 @@ def work(data_set):
                                              'intensity': tile[y]})
         if latitude >= 40:
             draw_data['squigle_line'].append({'latitude': latitude, 'longitude': longitude})
-            draw_data['squigle_line'].append({'latitude': latitude + step, 'longitude': longitude + step})
+            draw_data['squigle_line'].append({'latitude': latitude, 'longitude': longitude + step})
     # to take an average we need to find the area underneath the line
     area = 0
     for point in xrange(0, len(draw_data['squigle_line']), 2):

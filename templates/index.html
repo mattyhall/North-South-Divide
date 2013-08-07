@@ -22,7 +22,7 @@ function initialize() {
     squigle = data["squigle_line"];
     average = data["average_line"];
     circles = data["circles"];
-    if ("{{ no_line }}" == "False") {
+    if ("{{ no_line }}" == "false") {
       $.each(squigle, function(index, value){
         path.push(new google.maps.LatLng(value['latitude'], value['longitude']));
       });
@@ -47,7 +47,7 @@ function initialize() {
       path2.setMap(map);      
     }
 
-    if ("{{ heat_map }}" != "True") {
+    if ("{{ heat_map }}" != "true") {
       var circle;
       $.each(circles, function(index, value){
         var circleOpts = {
