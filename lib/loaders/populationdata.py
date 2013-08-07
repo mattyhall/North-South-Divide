@@ -1,6 +1,10 @@
 from lib.loaddata import DataSet
 
 class PopulationData(DataSet):
+    '''
+    Population per longitude and latitude
+    '''
+
     NAME = 'population'
     BOTTOM = 0.2
     MIDDLE = 0.5

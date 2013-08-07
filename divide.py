@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from lib.work import work
 from lib.loaders.policedata import PoliceData
 from lib.loaders.populationdata import PopulationData
+from lib.loaders.childpovertydata import ChildPovertyData
 import json
 
 app = Flask(__name__)
@@ -11,6 +12,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 def root():
     return render_template('index.html', police=request.args.get('police', 'true'),
                                          population=request.args.get('population', 'false'), 
+                                         child_poverty=request.args.get('childpoverty', 'false'),
                                          no_line=request.args.get('noline', 'false'),
                                          heat_map=request.args.get('heatmap', 'false'))
 
@@ -18,14 +20,18 @@ def root():
 def data():
     police = request.args.get('police', 'true')
     population = request.args.get('population', 'false')
+    child_poverty = request.args.get('childpoverty', 'false')
     data_sets = []
     if police == 'true':
         data_set = PoliceData()  
         data_set.load()
         data_sets.append(data_set)
     if population == 'true':
-        print 'population'
         data_set = PopulationData()
+        data_set.load()
+        data_sets.append(data_set)
+    if child_poverty == 'true':
+        data_set = ChildPovertyData()
         data_set.load()
         data_sets.append(data_set)
     output = {}

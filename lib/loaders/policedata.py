@@ -2,6 +2,10 @@ import os
 from lib.loaddata import DataSet
 
 class PoliceData(DataSet):
+    '''
+    List of street crimes which are all geolocated
+    '''
+    
     NAME = 'police'
     BOTTOM = 0.05
     MIDDLE = 0.15
