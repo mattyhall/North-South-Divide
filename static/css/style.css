@@ -1,0 +1,28 @@
+body {
+	font-family: 'Source Code Pro', sans-serif;
+}
+
+#map-canvas {
+	margin-left: 10px;
+	width: 700px;
+	height: 500px;
+}
+
+.title h1 {
+	margin-left: auto;
+	margin-right: auto;
+	font-weight: bold;
+	font-size: 30pt;
+	text-decoration: underline;
+	text-align: center;
+}
+
+.my-navbar {
+	text-align: center;
+	line-height: 5px;
+}
+
+.my-navbar li {
+	list-style-type: none;
+	display: inline;
+}

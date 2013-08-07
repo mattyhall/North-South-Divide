@@ -5,6 +5,7 @@ from lib.loaders.populationdata import PopulationData
 import json
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1 
 
 @app.route('/')
 def root():
@@ -36,7 +37,6 @@ def data():
     average /= len(data_sets)
     output['average'] = [{'latitude': average, 'longitude': -5}, {'latitude': average, 'longitude': 2}]
     return json.dumps(output)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
