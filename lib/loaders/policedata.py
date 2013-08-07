@@ -2,6 +2,7 @@ import os
 from lib.loaddata import DataSet
 
 class PoliceData(DataSet):
+    NAME = 'police'
     BOTTOM = 0.05
     MIDDLE = 0.15
     

@@ -1,4 +1,12 @@
 class DataSet(object):
+    '''
+    All data loaders should inherit from this class. Each of the methods and variables here should be
+    implemented. 
+    '''
+    NAME = ''
+    BOTTOM = 0.1
+    MIDDLE = 0.8    
+
     def __init__(self):
         self.data = []
 

@@ -1,6 +1,7 @@
 from lib.loaddata import DataSet
 
 class PopulationData(DataSet):
+    NAME = 'population'
     BOTTOM = 0.2
     MIDDLE = 0.5
 

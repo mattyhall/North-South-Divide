@@ -9,6 +9,7 @@
     <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
     <script>
 function initialize() {
+  var colour = {police: '#0000FF', population: '#00FF00', 'average': '#FF0000'};
   var myLatLng = new google.maps.LatLng(52, 0);
   var mapOptions = {
     zoom: 3,
@@ -17,64 +18,81 @@ function initialize() {
   };
 
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-  $.getJSON('/data', {'dataset': {{ data_set }}}, function(data){
-    var path = [];
-    squigle = data["squigle_line"];
-    average = data["average_line"];
-    circles = data["circles"];
-    if ("{{ no_line }}" == "false") {
-      $.each(squigle, function(index, value){
-        path.push(new google.maps.LatLng(value['latitude'], value['longitude']));
-      });
-      var path = new google.maps.Polyline({
-        path: path,
-        strokeColor: '#000000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-      path.setMap(map);
-
-      var path2 = [];
-      $.each(average, function(index, value){
-        path2.push(new google.maps.LatLng(value['latitude'], value['longitude']));
-      });
-      var path2 = new google.maps.Polyline({
-        path: path2,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-      path2.setMap(map);      
-    }
-
-    if ("{{ heat_map }}" != "true") {
-      var circle;
-      $.each(circles, function(index, value){
-        var circleOpts = {
-          strokeColor: value['colour'],
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: value['colour'],
-          fillOpacity: 0.6,
-          map: map,
-          center: new google.maps.LatLng(value['latitude'], value['longitude']),
-          radius: 2000
-        };
-        circle = new google.maps.Circle(circleOpts);  
-      });
-    } else {
-      var heatMapData = [];
-      $.each(circles, function(index, value){
-        heatMapData.push({location: new google.maps.LatLng(value['latitude'], value['longitude']), weight: value['intensity']});
-      });
-      var pointArray = new google.maps.MVCArray(heatMapData);
-      var heatmap = new google.maps.visualization.HeatmapLayer({
-        data: pointArray,
-        radius: 50,
-        dissipating: false
-      });
-      heatmap.setMap(map);
-    }
+  $.getJSON('/data', {population: "{{ population }}", police: "{{ police }}"}, function(data) {
+    length = Object.keys(data).length;
+    $.each(data, function(index, value) {
+      if (index != 'average') {
+        var path2 = [];
+        var average = value['average_line'];
+        $.each(average, function(index, value){
+          path2.push(new google.maps.LatLng(value['latitude'], value['longitude']));
+        });
+        var path2 = new google.maps.Polyline({
+          path: path2,
+          strokeColor: colour[index],
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        path2.setMap(map);      
+      } else {
+        var path2 = [];
+        $.each(value, function(index, value){
+          path2.push(new google.maps.LatLng(value['latitude'], value['longitude']));
+        });
+        var path2 = new google.maps.Polyline({
+          path: path2,
+          strokeColor: colour[index],
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+        path2.setMap(map);              
+      }        
+      if (length == 2 && index != 'average'){ 
+        if ("{{ no_line }}" == 'false') {
+          squigle = value['squigle_line'];
+          var path = [];
+          $.each(squigle, function(index, value) {
+            path.push(new google.maps.LatLng(value['latitude'], value['longitude']));
+          });
+          var path = new google.maps.Polyline({
+            path: path,
+            strokeColor: '#000000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+          });
+          path.setMap(map);
+        }
+        var circles = value['circles']
+        if ("{{ heat_map }}" != "true") {
+          var circle;
+          $.each(circles, function(index, value){
+            var circleOpts = {
+              strokeColor: value['colour'],
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: value['colour'],
+              fillOpacity: 0.6,
+              map: map,
+              center: new google.maps.LatLng(value['latitude'], value['longitude']),
+              radius: 2000
+            };
+            circle = new google.maps.Circle(circleOpts);  
+          });
+        } else {
+          var heatMapData = [];
+          $.each(circles, function(index, value){
+            heatMapData.push({location: new google.maps.LatLng(value['latitude'], value['longitude']), weight: value['intensity']});
+          });
+          var pointArray = new google.maps.MVCArray(heatMapData);
+          var heatmap = new google.maps.visualization.HeatmapLayer({
+            data: pointArray,
+            radius: 50,
+            dissipating: false
+          });
+          heatmap.setMap(map);
+        }          
+      }
+    });
   });
 }  
 
