@@ -24,4 +24,4 @@ Inside the 'lib' directory there is
 
 #Copyright notices
 
-* data/land_registry - Data produced by Land Registry © Crown copyright 2013.
+* data/land_registry - Data produced by Land Registry © Crown copyright 2013. This data covers the transactions received at Land Registry in the period of June 2013. © Crown copyright 2013.
