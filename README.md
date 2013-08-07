@@ -22,3 +22,6 @@ Inside the 'lib' directory there is
 
 * loaders/ - All the data loaders live here and inherit DataSet
 
+#Copyright notices
+
+* data/land_registry - Data produced by Land Registry © Crown copyright 2013.
