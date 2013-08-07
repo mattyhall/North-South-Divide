@@ -54,5 +54,5 @@ def work(data_set):
         area += ((a + b) * step) / 2.0
     # to get a straight, horizontal line we can treat the area as a rectangle
     height = area / abs(right - left) + bottom
-    draw_data['average_line'] = [{'latitude': height, 'longitude': left}, {'latitude': height, 'longitude': right}]
+    draw_data['average_line'] = [{'latitude': height, 'longitude': -5}, {'latitude': height, 'longitude': 2}]
     return draw_data
