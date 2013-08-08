@@ -1,0 +1,5 @@
+Flask==0.10.1
+Jinja2==2.7
+Markdown==2.2.1
+Postcodes==0.1
+Werkzeug==0.9.3
