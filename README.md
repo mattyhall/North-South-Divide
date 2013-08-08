@@ -4,9 +4,10 @@ North-South-Divide
 A program to calculate where the North-South divide is based on various data. Made for YRS2013
 
 #Dependencies
-The only dependency, other than Python, is Flask. To install do
+The only dependencies, other than Python, are Flask and Postcodes. To install do
 
     pip install flask
+    pip install postcodes
 
 
 #Code and Directory Structure

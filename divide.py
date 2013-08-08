@@ -11,7 +11,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 
 @app.route('/')
 def root():
-    return render_template('index.html', police=request.args.get('police', 'true'),
+    return render_template('index.html', police=request.args.get('police', 'false'),
                                          population=request.args.get('population', 'false'), 
                                          child_poverty=request.args.get('childpoverty', 'false'),
                                          cancer=request.args.get('cancer', 'false'),
