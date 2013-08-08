@@ -1,7 +1,9 @@
 North-South-Divide
 ==================
 
-A program to calculate where the North-South divide is based on various data. Made for YRS2013
+A program to calculate where the North-South divide is based on various data. Made for YRS2013. A presentation explaining (sort of) what is going on is available at http://prezi.com/aegy6w3yejhs
+
+The code is BSD. See the LICENSE file for more information
 
 #Dependencies
 The only dependencies, other than Python, are Flask and Postcodes. To install do
