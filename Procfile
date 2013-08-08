@@ -1,1 +1,1 @@
-web:gunicorn divide:app
+web: gunicorn divide: app
