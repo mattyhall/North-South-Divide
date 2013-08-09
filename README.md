@@ -13,7 +13,7 @@ The only dependencies, other than Python, are Flask and Postcodes. To install do
 
 
 #Code and Directory Structure
-The 'divide.py' file is the entry-point of the program. It is a webserver that displays a map of the North-South divide.
+The 'divide.py' file is the entry-point of the program. It is a webserver that displays a map of the North-South divide. All data sets are in data/.
 
 Inside the 'lib' directory there is
 
