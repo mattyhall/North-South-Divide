@@ -44,7 +44,7 @@ def work(step, data_set):
             draw_data['squigle_line'].append({'latitude': latitude, 'longitude': longitude + step})
     # to take an average we need to find the area underneath the line
     area = 0
-    for point in xrange(0, len(draw_data['squigle_line']), 2):
+    for point in range(0, len(draw_data['squigle_line']), 2):
         # we make a trapezium out of this data point and the next one
         a = draw_data['squigle_line'][point]['latitude'] - bottom
         b = draw_data['squigle_line'][point]['latitude'] - bottom

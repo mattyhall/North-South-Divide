@@ -13,7 +13,7 @@ class ChildPovertyData(DataSet):
         for row in handle:
             row = row.strip()
             split = row.split(',')
-            print split
+            print(split)
             if len(split) == 3:
                 self.data.append({'latitude': float(split[1]), 'longitude': float(split[0]), 'percentage': float(split[2])})
 

@@ -1,7 +1,7 @@
 def build_tiles(data_set, step, top, bottom, left, right):
     # top - bottom here gives the number of degrees that our data covers
     # dividing by step gives the number of areas it will be split into but is off by one
-    tiles = [[0 for y in xrange(1 + int((top - bottom) / step))] for x in range(1 + int((right - left) / step))]
+    tiles = [[0 for y in range(1 + int((top - bottom) / step))] for x in range(1 + int((right - left) / step))]
     for row in data_set:
         # find the tile it is in and increase the count by whatever the data set returns
         tile_lat = int((row['latitude'] - bottom) / step) 
