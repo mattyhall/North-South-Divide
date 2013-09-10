@@ -16,7 +16,8 @@ def root():
                                          cancer=request.args.get('cancer', 'false'),
                                          no_line=request.args.get('noline', 'false'),
                                          heat_map=request.args.get('heatmap', 'false'),
-                                         step=float(request.args.get('step', '0.2')))
+                                         step=float(request.args.get('step', '0.2')),
+                                         realistic=request.args.get('realistic', 'false'))
 
 @app.route('/data')
 def data():

@@ -36,6 +36,20 @@ function initialize() {
   };
 
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  if ("{{ realistic }}" == "true"){
+    var circleOpts = {
+      strokeColor: "#000000",
+      strokeOpacity: 1,
+      strokeWeight: 2,
+      fillColor: "#ffffff",
+      fillOpacity: 0.0,
+      map: map,
+      center: new google.maps.LatLng(51.5112, -0.119568),
+      radius: 32000
+    };
+    circle = new google.maps.Circle(circleOpts);  
+    return;
+  }
   $.getJSON('/data', {population: "{{ population }}", 
                       police: "{{ police }}",
                       childpoverty: "{{ child_poverty }}",
@@ -130,6 +144,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
           <input type="radio" name="heatmap" value="false" {% if heat_map != 'true' %}checked{% endif %}>Dots</input> 
           <input type="radio" name="heatmap" value="true" {% if heat_map == 'true' %}checked{% endif %}>Heatmap</input>
           <input type='submit' value='Calculate'>
+        </form>
+        <form action='/?realistic=true'>
+          <input type='hidden' name='realistic' value='true'>
+          <input type='submit' value='Realistic'>
         </form>
       </div>
     </div>
